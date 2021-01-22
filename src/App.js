@@ -1,23 +1,64 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import Header from './components/Header';
+import Tasks from "./components/Tasks";
+import { library } from '@fortawesome/fontawesome-svg-core'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCoffee, faCheckSquare, faTimes} from '@fortawesome/free-solid-svg-icons'
+
+library.add(faCoffee, faCheckSquare, faTimes)
 
 function App() {
+   const [tasks, setTasks] = useState([
+        {
+            'id':1,
+            'description': "Wash my car",
+            'day' : 'Feb 5th at 2:30pm',
+            'reminder': true
+
+        },
+        {
+            'id':2,
+            'description': "Practice some more bootstrap",
+            'day' : 'Feb 5th at 1:30pm',
+            'reminder': true
+
+        },
+        {
+            'id':3,
+            'description': "Add features to my laravel project",
+            'day' : 'Feb 5th at 12:30pm',
+            'reminder': true
+        },
+        {
+            'id':4,
+            'description': "Wash my car",
+            'day' : 'Feb 5th at 11:30am',
+            'reminder': true
+
+        },
+        {
+            'id':5,
+            'description': "Practice some more bootstrap",
+            'day' : 'Feb 5th at 10:30am',
+            'reminder': true
+
+        },
+        {
+            'id':6,
+            'description': "Add features to my laravel project",
+            'day' : 'Feb 5th at 2:30pm',
+            'reminder': true
+        }
+    ]);
+
+    const deleteTask = (id) => {
+        const newTasks = tasks.filter((task)=> (task.id !== id));
+        setTasks(newTasks); 
+    }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container border-1">
+      <Header title="Task Manager"/>
+      <Tasks tasks={tasks} onDelete={deleteTask} />
     </div>
   );
 }
