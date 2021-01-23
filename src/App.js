@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Header from './components/Header';
 import Tasks from "./components/Tasks";
+import AddTask from "./components/AddTask";
 import { library } from '@fortawesome/fontawesome-svg-core'
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee, faCheckSquare, faTimes} from '@fortawesome/free-solid-svg-icons'
@@ -55,10 +56,19 @@ function App() {
         const newTasks = tasks.filter((task)=> (task.id !== id));
         setTasks(newTasks); 
     }
+
+    const toggleReminder = (id) => {
+      console.log(id);
+      const newArray = tasks.map((task)=> (task.id === id ? 
+        {...task, reminder : !task.reminder} : task))
+      console.log(newArray)
+      setTasks(newArray)
+    }
   return (
     <div className="container border-1">
       <Header title="Task Manager"/>
-      <Tasks tasks={tasks} onDelete={deleteTask} />
+      <AddTask />
+      <Tasks tasks={tasks} onDelete={deleteTask}  onToggle={toggleReminder}/>
     </div>
   );
 }
