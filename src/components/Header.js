@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types';
 import Button from './Button';
 
-const Header = ({title}) => {
-    const buttonClicked = () =>{
-        console.log("clicked");
-    }
+const Header = ({title, onAddClick, showAddTask}) => {
     return (
         <header className="d-flex justify-content-between m-2 align-items-center p-auto">
             <h1>{title}</h1>
-            <Button title='Add' color='green' buttonClicked={buttonClicked}/>
+            {showAddTask ? 
+                <Button title='Close' color='red' buttonClicked={onAddClick}/> :
+                <Button title='Add' color='green' buttonClicked={onAddClick}/>
+            }
         </header>
     )
 }
