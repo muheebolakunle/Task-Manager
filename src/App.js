@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import Header from './components/Header';
+import Footer from './components/Footer';
+import About from './components/About';
 import Tasks from "./components/Tasks";
 import AddTask from "./components/AddTask";
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -36,7 +39,7 @@ function App() {
     
     const addTask = async (task) => {
       // const id = Math.floor(Math.random() * 10000) + 1;
-      const res = await fetch('http://localhost:5000/tasks', {
+      await fetch('http://localhost:5000/tasks', {
         method: "POST",
         body: JSON.stringify(task),
         headers: {
@@ -87,11 +90,25 @@ function App() {
 
     }
   return (
-    <div className="container border-1">
-      <Header title="Task Manager" onAddClick = {()=>{ setShowAddTask(!showAddTask)}} showAddTask={showAddTask} />
-      {showAddTask && <AddTask onAdd={addTask}/>}
-      {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask}  onToggle={toggleReminder}/> : <h4 className="ml-3">No tasks to show</h4> }
-    </div>
+    <Router>
+      <div className="container border-1">
+        <Header title="Task Manager" onAddClick = {()=>{ setShowAddTask(!showAddTask)}} showAddTask={showAddTask} />
+        
+
+        <Route 
+          path="/" 
+          exact 
+          render={(props)=>(
+            <>    
+              {showAddTask && <AddTask onAdd={addTask}/>}
+              {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask}  onToggle={toggleReminder}/> : <h4 className="ml-3">No tasks to show</h4> }
+            </>
+          )} 
+        />
+        <Route path="/about" component={About} />
+        <Footer />
+      </div>
+    </Router>
   );
 }
 
